@@ -194,13 +194,13 @@ steps:
       **\CredentialProvider.Microsoft.pdb
       **\Microsoft.Artifacts.Authentication.dll
       **\Microsoft.Artifacts.Authentication.pdb
-    TargetFolder: '$(Build.ArtifactStagingDirectory)\symbols'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildConfiguration)\Symbols'
 
 - ${{ if eq(parameters.sign, 'true') }}:
   - task: PublishSymbols@2
     displayName: Publish symbols
     inputs:
-      SymbolsFolder: '$(Build.ArtifactStagingDirectory)\symbols'
+      SymbolsFolder: '$(Build.ArtifactStagingDirectory)\$(BuildConfiguration)\Symbols'
       SearchPattern:  '**\*.pdb'
       IndexSources: false
       PublishSymbols: true
@@ -209,13 +209,6 @@ steps:
     env:
       ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: 'microsoft'
       ARTIFACTSERVICES_SYMBOL_USEAAD: 'false'
-
-- ${{ if eq(parameters.publish, 'true') }}:
-  - task: PublishPipelineArtifact@1
-    displayName: 'Upload symbols'
-    inputs:
-      artifact: "Symbols"
-      targetPath: '$(Build.ArtifactStagingDirectory)\symbols'
 
 - powershell: 'Write-Output ("##vso[task.setvariable variable=SignType;]")'
   displayName: Clear SignType
