@@ -239,9 +239,3 @@ steps:
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)\$(BuildConfiguration)\'
       ArtifactName: '$(Build.BuildNumber)'
-
-  - task: PublishBuildArtifacts@1
-    displayName: Publish Script
-    inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\helpers\installcredprovider.ps1'
-      ArtifactName: '$(Build.BuildNumber)'
